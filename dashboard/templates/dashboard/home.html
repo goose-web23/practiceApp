@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'home' %}">Главная</a>
+    <span>→</span>
+    <span>Админ-панель</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="dashboard-section">
+
+    <div class="dashboard-header">
+        <div>
+            <h1>Управление содержимым</h1>
+            <p class="text-muted">
+                Выберите практику для управления её этапами и документами.
+            </p>
+        </div>
+
+        <a
+            href="{% url 'dashboard_practice_create' %}"
+            class="button"
+        >
+            + Создать практику
+        </a>
+    </div>
+
+    {% if practices %}
+
+        <div class="practice-admin-grid">
+
+            {% for practice in practices %}
+
+                <article class="practice-admin-card">
+
+                    <div class="practice-admin-card__header">
+
+                        <div>
+                            <span class="practice-admin-card__label">
+                                Практика №{{ forloop.counter }}
+                            </span>
+
+                            <h2>{{ practice.name }}</h2>
+                        </div>
+
+                        <span class="dashboard-status
+                            {% if practice.active %}
+                                dashboard-status--active
+                            {% else %}
+                                dashboard-status--inactive
+                            {% endif %}
+                        ">
+                            {% if practice.active %}
+                                Активна
+                            {% else %}
+                                Скрыта
+                            {% endif %}
+                        </span>
+
+                    </div>
+
+                    {% if practice.description %}
+                        <p class="practice-admin-card__description">
+                            {{ practice.description|truncatewords:25 }}
+                        </p>
+                    {% else %}
+                        <p class="practice-admin-card__description text-muted">
+                            Описание пока не добавлено.
+                        </p>
+                    {% endif %}
+
+                    <div class="practice-admin-card__meta">
+                        <span>
+                            Этапов: {{ practice.stages.count }}
+                        </span>
+                    </div>
+
+                    <div class="practice-admin-card__actions">
+
+                        <a
+                            href="{% url 'dashboard_stage_list' practice.id %}"
+                            class="button"
+                        >
+                            Управление →
+                        </a>
+
+                        <a
+                            href="{% url 'dashboard_practice_edit' practice.id %}"
+                            class="button button--secondary"
+                        >
+                            Редактировать
+                        </a>
+
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-state">
+
+            <h2>Практик пока нет</h2>
+
+            <p>
+                Создайте первую практику, чтобы начать наполнять сайт.
+            </p>
+
+            <a
+                href="{% url 'dashboard_practice_create' %}"
+                class="button"
+            >
+                Создать практику
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</section>
+{% endblock %}

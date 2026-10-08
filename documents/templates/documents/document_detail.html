@@ -96,6 +96,21 @@
         </section>
     {% endif %}
 
+    {% if explanations %}
+        <section class="document-explanations">
+            <h2>Дополнительные пояснения</h2>
+
+            {% for explanation in explanations %}
+                <article class="explanation-card">
+                    <h3>{{ explanation.title }}</h3>
+                    <div class="explanation-card__text">
+                        {{ explanation.text|linebreaks }}
+                    </div>
+                </article>
+            {% endfor %}
+        </section>
+    {% endif %}
+
 
     <section>
         <h2>

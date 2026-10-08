@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'home' %}">Главная</a>
+    <span>→</span>
+
+    <a href="{% url 'dashboard_home' %}">
+        Админ-панель
+    </a>
+
+    <span>→</span>
+
+    <a href="{% url 'dashboard_practice_list' %}">
+        Практики
+    </a>
+
+    <span>→</span>
+
+    <a href="{% url 'dashboard_stage_list' practice.id %}">
+        {{ practice.name }}
+    </a>
+
+    <span>→</span>
+
+    <span>Удаление</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="dashboard-section">
+    <div class="dashboard-header">
+        <div>
+            <h1>Удалить этап?</h1>
+            <p class="text-muted">
+                Практика:
+                <strong>{{ practice.name }}</strong>
+            </p>
+
+            <h2>{{ stage.name }}</h2>
+
+        </div>
+    </div>
+
+    <div class="warning-block">
+        <p>
+            Вы собираетесь удалить этот этап.
+        </p>
+
+        <p>
+            Связанные с ним документы и пояснения также могут быть
+            удалены вместе с этапом.
+        </p>
+
+        <p>
+            Это действие нельзя отменить.
+        </p>
+
+    </div>
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        <div class="dashboard-form__actions">
+
+            <button
+                type="submit"
+                class="button button--danger"
+            >
+                Да, удалить
+            </button>
+
+            <a
+                href="{% url 'dashboard_stage_list' practice.id %}"
+                class="button button--secondary"
+            >
+                Отмена
+            </a>
+        </div>
+    </form>
+</section>
+{% endblock %}

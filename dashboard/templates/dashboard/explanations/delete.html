@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    {% include "includes/breadcrumbs.html" %}
+
+    <div class="page-heading">
+        <h1>Удалить пояснение?</h1>
+    </div>
+
+    <div class="confirm-card">
+        <p>
+            Ты действительно хочешь удалить пояснение
+            <strong>«{{ explanation.title }}»</strong>?
+        </p>
+
+        <p>Это действие нельзя отменить.</p>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <button type="submit" class="button button--danger">
+                Удалить
+            </button>
+
+            <a
+                href="{% url 'dashboard_explanation_list' parent_type parent.id %}"
+                class="button button--secondary"
+            >
+                Отмена
+            </a>
+        </form>
+    </div>
+</div>
+{% endblock %}

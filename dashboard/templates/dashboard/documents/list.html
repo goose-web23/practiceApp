@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'home' %}">Главная</a>
+    <span>→</span>
+
+    <a href="{% url 'dashboard_home' %}">
+        Админ-панель
+    </a>
+
+    <span>→</span>
+
+    <a href="{% url 'dashboard_practice_list' %}">
+        Практики
+    </a>
+
+    <span>→</span>
+
+    <a href="{% url 'dashboard_stage_list' practice.id %}">
+        {{ practice.name }}
+    </a>
+
+    <span>→</span>
+
+    <span>{{ stage.name }}</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="dashboard-section">
+
+    <div class="dashboard-header">
+        <div>
+            <h1>Документы</h1>
+
+            <p class="text-muted">
+                {{ practice.name }} → {{ stage.name }}
+            </p>
+        </div>
+
+        <a
+            href="{% url 'dashboard_document_create' practice.id stage.id %}"
+            class="button"
+        >
+            Добавить документ
+        </a>
+    </div>
+
+    {% if documents %}
+        <div class="dashboard-list">
+            {% for document in documents %}
+
+                <div class="dashboard-item">
+
+                    <div class="dashboard-item__content">
+
+                        <div class="stage-number">
+                            Документ {{ forloop.counter }}
+                        </div>
+
+                        <h2>{{ document.name }}</h2>
+
+                        <a
+                            href="{% url 'dashboard_explanation_list' 'document' document.id %}"
+                            class="button"
+                        >
+                            Пояснения к документу
+                        </a>
+
+                        {% if document.instruction %}
+                            <p>
+                                {{ document.instruction|truncatewords:25 }}
+                            </p>
+                        {% endif %}
+
+                        <div class="dashboard-meta">
+
+                            {% if document.deadline %}
+                                <span>
+                                    Дедлайн:
+                                    {{ document.deadline|date:"d.m.Y" }}
+                                </span>
+                            {% endif %}
+
+                            <span>
+                                Порядок: {{ document.order }}
+                            </span>
+
+                            {% if document.template_file %}
+                                <span>Есть шаблон</span>
+                            {% endif %}
+
+                            {% if document.example_file %}
+                                <span>Есть пример</span>
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                    <div class="dashboard-item__actions">
+
+                        <a
+                            href="{% url 'dashboard_document_edit' practice.id stage.id document.id %}"
+                            class="button button--secondary"
+                        >
+                            Редактировать
+                        </a>
+
+                        <a
+                            href="{% url 'dashboard_document_delete' practice.id stage.id document.id %}"
+                            class="button button--danger"
+                        >
+                            Удалить
+                        </a>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-state">
+
+            <h2>Документов пока нет</h2>
+
+            <p>
+                Добавьте первый документ для этого этапа.
+            </p>
+
+            <a
+                href="{% url 'dashboard_document_create' practice.id stage.id %}"
+                class="button"
+            >
+                Добавить документ
+            </a>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

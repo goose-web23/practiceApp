@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'home' %}">Главная</a>
+    <span>→</span>
+
+    <a href="{% url 'dashboard_home' %}">
+        Админ-панель
+    </a>
+
+    <span>→</span>
+
+    <a href="{% url 'dashboard_practice_list' %}">
+        Практики
+    </a>
+
+    <span>→</span>
+
+    <a href="{% url 'dashboard_stage_list' practice.id %}">
+        {{ practice.name }}
+    </a>
+
+    <span>→</span>
+
+    <a href="{% url 'dashboard_document_list' practice.id stage.id %}">
+        {{ stage.name }}
+    </a>
+
+    <span>→</span>
+
+    <span>Удаление</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="dashboard-section">
+
+    <div class="dashboard-header">
+
+        <div>
+
+            <h1>Удалить документ?</h1>
+
+            <p class="text-muted">
+                {{ practice.name }} → {{ stage.name }}
+            </p>
+
+            <h2>{{ document.name }}</h2>
+
+        </div>
+
+    </div>
+
+    <div class="warning-block">
+
+        <p>
+            Документ будет удалён из этого этапа.
+        </p>
+
+        <p>
+            Загруженный шаблон и пример также перестанут быть
+            доступны через этот документ.
+        </p>
+
+        <p>
+            Это действие нельзя отменить.
+        </p>
+
+    </div>
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        <div class="dashboard-form__actions">
+
+            <button
+                type="submit"
+                class="button button--danger"
+            >
+                Да, удалить
+            </button>
+
+            <a
+                href="{% url 'dashboard_document_list' practice.id stage.id %}"
+                class="button button--secondary"
+            >
+                Отмена
+            </a>
+        </div>
+    </form>
+</section>
+{% endblock %}

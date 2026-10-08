@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    {% include "includes/breadcrumbs.html" %}
+
+    <div class="page-heading">
+        <div>
+            <h1>Пояснения</h1>
+            <p>
+                Объект:
+                <strong>{{ parent_name }}</strong>
+            </p>
+        </div>
+
+        <a
+            href="{% url 'dashboard_explanation_create' parent_type parent.id %}"
+            class="button"
+        >
+            Добавить пояснение
+        </a>
+    </div>
+
+    {% if explanations %}
+        <div class="admin-list">
+            {% for explanation in explanations %}
+                <article class="admin-list__item">
+                    <div>
+                        <h2>{{ explanation.title }}</h2>
+                        <p>{{ explanation.text|linebreaksbr }}</p>
+                    </div>
+
+                    <div class="admin-list__actions">
+                        <a
+                            href="{% url 'dashboard_explanation_edit' parent_type parent.id explanation.id %}"
+                            class="button"
+                        >
+                            Редактировать
+                        </a>
+
+                        <a
+                            href="{% url 'dashboard_explanation_delete' parent_type parent.id explanation.id %}"
+                            class="button button--danger"
+                        >
+                            Удалить
+                        </a>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <h2>Пояснений пока нет</h2>
+            <p>Добавь первое пояснение для этого объекта.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

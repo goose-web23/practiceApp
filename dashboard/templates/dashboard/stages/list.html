@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'home' %}">Главная</a>
+    <span>→</span>
+    <a href="{% url 'dashboard_home' %}">Админ-панель</a>
+    <span>→</span>
+    <a href="{% url 'dashboard_practice_list' %}">Практики</a>
+    <span>→</span>
+    <span>{{ practice.name }}</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="dashboard-section">
+    <div class="dashboard-header">
+        <div>
+            <h1>Этапы практики</h1>
+
+            <p class="text-muted">
+                {{ practice.name }}
+            </p>
+        </div>
+
+        <a
+            href="{% url 'dashboard_stage_create' practice.id %}"
+            class="button"
+        >
+            Добавить этап
+        </a>
+    </div>
+
+    {% if stages %}
+        <div class="dashboard-list">
+            {% for stage in stages %}
+
+                <div class="dashboard-item">
+
+                    <div class="dashboard-item__content">
+
+                        <div class="stage-number">
+                            Этап {{ forloop.counter }}
+                        </div>
+
+                        <h2>{{ stage.name }}</h2>
+
+                        {% if stage.instructions %}
+                            <p>
+                                {{ stage.instructions|truncatewords:25 }}
+                            </p>
+                        {% endif %}
+
+                        <a
+                            href="{% url 'dashboard_explanation_list' 'stage' stage.id %}"
+                            class="button"
+                        >
+                            Пояснения к этапу
+                        </a>
+
+                        <div class="dashboard-meta">
+
+                            {% if stage.deadline %}
+                                <span>
+                                    Дедлайн:
+                                    {{ stage.deadline|date:"d.m.Y" }}
+                                </span>
+                            {% endif %}
+
+                            <span>
+                                Порядок: {{ stage.order }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="dashboard-item__actions">
+                        <a
+                            href="{% url 'dashboard_document_list' practice.id stage.id %}"
+                            class="button button--secondary"
+                        >
+                            Документы
+                        </a>
+
+                        <a
+                            href="{% url 'dashboard_stage_edit' practice.id stage.id %}"
+                            class="button button--secondary"
+                        >
+                            Редактировать
+                        </a>
+
+                        <a
+                            href="{% url 'dashboard_stage_delete' practice.id stage.id %}"
+                            class="button button--danger"
+                        >
+                            Удалить
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+        <div class="empty-state">
+            <h2>Этапов пока нет</h2>
+
+            <p>
+                Добавьте первый этап для этой практики.
+            </p>
+
+            <a
+                href="{% url 'dashboard_stage_create' practice.id %}"
+                class="button"
+            >
+                Добавить этап
+            </a>
+
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

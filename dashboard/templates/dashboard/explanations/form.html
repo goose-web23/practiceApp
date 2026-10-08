@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    {% include "includes/breadcrumbs.html" %}
+
+    <div class="page-heading">
+        <h1>{{ page_title }}</h1>
+    </div>
+
+    <p>
+        Объект:
+        <strong>{{ parent_name }}</strong>
+    </p>
+
+    <form method="post" class="form">
+        {% csrf_token %}
+
+        {{ form.non_field_errors }}
+
+        {% for field in form %}
+            <div class="form__group">
+                <label for="{{ field.id_for_label }}">
+                    {{ field.label }}
+                </label>
+
+                {{ field }}
+
+                {% if field.help_text %}
+                    <small>{{ field.help_text }}</small>
+                {% endif %}
+
+                {% for error in field.errors %}
+                    <p class="form__error">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <div class="form__actions">
+            <button type="submit" class="button">
+                Сохранить
+            </button>
+
+            <a
+                href="{% url 'dashboard_explanation_list' parent_type parent.id %}"
+                class="button button--secondary"
+            >
+                Отмена
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

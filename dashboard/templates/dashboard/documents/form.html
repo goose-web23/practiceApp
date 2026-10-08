@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'home' %}">Главная</a>
+    <span>→</span>
+
+    <a href="{% url 'dashboard_home' %}">
+        Админ-панель
+    </a>
+
+    <span>→</span>
+
+    <a href="{% url 'dashboard_practice_list' %}">
+        Практики
+    </a>
+
+    <span>→</span>
+
+    <a href="{% url 'dashboard_stage_list' practice.id %}">
+        {{ practice.name }}
+    </a>
+
+    <span>→</span>
+
+    <a href="{% url 'dashboard_document_list' practice.id stage.id %}">
+        {{ stage.name }}
+    </a>
+
+    <span>→</span>
+
+    <span>{{ title }}</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="dashboard-section">
+
+    <div class="dashboard-header">
+        <div>
+            <h1>{{ title }}</h1>
+
+            <p class="text-muted">
+                {{ practice.name }} → {{ stage.name }}
+            </p>
+        </div>
+    </div>
+
+    <form
+        method="post"
+        enctype="multipart/form-data"
+        class="dashboard-form"
+    >
+
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="form-errors">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <div class="form-group">
+            <label for="{{ form.name.id_for_label }}">
+                {{ form.name.label }}
+            </label>
+
+            {{ form.name }}
+
+            {% if form.name.errors %}
+                <div class="form-error">
+                    {{ form.name.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.instruction.id_for_label }}">
+                {{ form.instruction.label }}
+            </label>
+
+            {{ form.instruction }}
+
+            {% if form.instruction.errors %}
+                <div class="form-error">
+                    {{ form.instruction.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.filled_by.id_for_label }}">
+                {{ form.filled_by.label }}
+            </label>
+
+            {{ form.filled_by }}
+
+            {% if form.filled_by.errors %}
+                <div class="form-error">
+                    {{ form.filled_by.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.signed_by.id_for_label }}">
+                {{ form.signed_by.label }}
+            </label>
+
+            {{ form.signed_by }}
+
+            {% if form.signed_by.errors %}
+                <div class="form-error">
+                    {{ form.signed_by.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.deadline.id_for_label }}">
+                {{ form.deadline.label }}
+            </label>
+
+            {{ form.deadline }}
+
+            {% if form.deadline.errors %}
+                <div class="form-error">
+                    {{ form.deadline.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+
+            <label for="{{ form.template_file.id_for_label }}">
+                {{ form.template_file.label }}
+            </label>
+
+            {{ form.template_file }}
+
+            {% if document.template_file %}
+                <p class="form-file-info">
+                    Текущий файл:
+                    <a
+                        href="{{ document.template_file.url }}"
+                        target="_blank"
+                    >
+                        {{ document.template_file.name }}
+                    </a>
+                </p>
+            {% endif %}
+
+            {% if form.template_file.errors %}
+                <div class="form-error">
+                    {{ form.template_file.errors }}
+                </div>
+            {% endif %}
+
+        </div>
+
+        <div class="form-group">
+
+            <label for="{{ form.example_file.id_for_label }}">
+                {{ form.example_file.label }}
+            </label>
+
+            {{ form.example_file }}
+
+            {% if document.example_file %}
+                <p class="form-file-info">
+                    Текущий файл:
+                    <a
+                        href="{{ document.example_file.url }}"
+                        target="_blank"
+                    >
+                        {{ document.example_file.name }}
+                    </a>
+                </p>
+            {% endif %}
+
+            {% if form.example_file.errors %}
+                <div class="form-error">
+                    {{ form.example_file.errors }}
+                </div>
+            {% endif %}
+
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.order.id_for_label }}">
+                {{ form.order.label }}
+            </label>
+
+            {{ form.order }}
+
+            {% if form.order.errors %}
+                <div class="form-error">
+                    {{ form.order.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group form-group--checkbox">
+
+            {{ form.active }}
+
+            <label for="{{ form.active.id_for_label }}">
+                {{ form.active.label }}
+            </label>
+
+        </div>
+
+        <div class="dashboard-form__actions">
+
+            <button
+                type="submit"
+                class="button"
+            >
+                {{ submit_text }}
+            </button>
+
+            <a
+                href="{% url 'dashboard_document_list' practice.id stage.id %}"
+                class="button button--secondary"
+            >
+                Отмена
+            </a>
+
+        </div>
+    </form>
+</section>
+{% endblock %}

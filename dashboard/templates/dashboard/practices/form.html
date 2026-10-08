@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'home' %}">Главная</a>
+    <span>→</span>
+    <a href="{% url 'dashboard_home' %}">Админ-панель</a>
+    <span>→</span>
+    <a href="{% url 'dashboard_practice_list' %}">Практики</a>
+    <span>→</span>
+    <span>{{ title }}</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="dashboard-section">
+    <div class="dashboard-header">
+        <div>
+            <h1>{{ title }}</h1>
+        </div>
+    </div>
+
+    <form method="post" class="dashboard-form">
+
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="form-errors">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <div class="form-group">
+            <label for="{{ form.name.id_for_label }}">
+                {{ form.name.label }}
+            </label>
+
+            {{ form.name }}
+
+            {% if form.name.errors %}
+                <div class="form-error">
+                    {{ form.name.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.description.id_for_label }}">
+                {{ form.description.label }}
+            </label>
+
+            {{ form.description }}
+
+            {% if form.description.errors %}
+                <div class="form-error">
+                    {{ form.description.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group form-group--checkbox">
+            {{ form.active }}
+
+            <label for="{{ form.active.id_for_label }}">
+                {{ form.active.label }}
+            </label>
+        </div>
+
+        <div class="dashboard-form__actions">
+
+            <button
+                type="submit"
+                class="button"
+            >
+                {{ submit_text }}
+            </button>
+
+            <a
+                href="{% url 'dashboard_practice_list' %}"
+                class="button button--secondary"
+            >
+                Отмена
+            </a>
+        </div>
+    </form>
+</section>
+{% endblock %}

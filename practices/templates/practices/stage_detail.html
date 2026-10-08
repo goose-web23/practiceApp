@@ -1,17 +1,8 @@
 {% extends "base.html" %}
 
-{% block title %}
-    {{ stage.name }} — {{ practice.name }}
-{% endblock %}
-
 {% block breadcrumbs %}
-
-<nav class="breadcrumbs">
-
-    <a href="{% url 'home' %}">
-        Главная
-    </a>
-
+<div class="breadcrumbs">
+    <a href="{% url 'home' %}">Главная</a>
     <span>→</span>
 
     <a href="{% url 'practice_detail' practice.id %}">
@@ -20,79 +11,160 @@
 
     <span>→</span>
 
-    <span>
-        {{ stage.name }}
-    </span>
-
-</nav>
-
+    <span>{{ stage.name }}</span>
+</div>
 {% endblock %}
 
-
 {% block content %}
+<section class="stage-page">
+    <div class="stage-layout">
+        <aside class="stage-information">
+            <div class="stage-heading">
 
-<div class="container">
+                <span class="stage-heading__label">
+                    Этап практики
+                </span>
 
-    <h1>
-        {{ stage.name }}
-    </h1>
+                <h1>{{ stage.name }}</h1>
 
-    {% if stage.instructions %}
-        <section>
-            <h2>Инструкция</h2>
-            <p>
-                {{ stage.instructions|linebreaksbr }}
-            </p>
+                {% if practice.description %}
+                    <p class="stage-heading__description">
+                        {{ practice.description }}
+                    </p>
+                {% endif %}
+
+            </div>
+
+            {% if stage.deadline %}
+                <section class="stage-info-block">
+
+                    <h2>Срок выполнения</h2>
+
+                    <p>
+                        {{ stage.deadline|date:"d.m.Y" }}
+                    </p>
+
+                </section>
+            {% endif %}
+
+            {% if stage.instructions %}
+                <section class="stage-info-block">
+
+                    <h2>Что нужно сделать</h2>
+
+                    <div class="stage-rich-text">
+                        {{ stage.instructions|linebreaks }}
+                    </div>
+
+                </section>
+            {% endif %}
+
+            {% if stage.requirements %}
+                <section class="stage-info-block">
+
+                    <h2>Требования к оформлению</h2>
+
+                    <div class="stage-rich-text">
+                        {{ stage.requirements|linebreaks }}
+                    </div>
+
+                </section>
+            {% endif %}
+
+            {% if explanations %}
+                <section class="stage-explanations">
+                    <h2>Дополнительные пояснения</h2>
+
+                    {% for explanation in explanations %}
+                        <article class="explanation-card">
+                            <h3>{{ explanation.title }}</h3>
+                            <div class="explanation-card__text">
+                                {{ explanation.text|linebreaks }}
+                            </div>
+                        </article>
+                    {% endfor %}
+                </section>
+            {% endif %}
+
+        </aside>
+
+
+
+        <section class="stage-documents">
+            <div class="stage-documents__heading">
+                <div>
+                    <span class="stage-heading__label">
+                        Материалы этапа
+                    </span>
+
+                    <h2>Документы</h2>
+                </div>
+
+                <span class="stage-documents__count">
+                    {{ documents|length }}
+                </span>
+
+            </div>
+
+            {% if documents %}
+                <div class="stage-documents__list">
+                    {% for document in documents %}
+                        <article class="document-card">
+                            <div class="document-card__body">
+
+                                <h3>
+                                    {{ document.name }}
+                                </h3>
+
+                                {% if document.instruction %}
+                                    <p>
+                                        {{ document.instruction|truncatewords:30 }}
+                                    </p>
+                                {% endif %}
+
+                                <div class="document-card__meta">
+
+                                    {% if document.deadline %}
+                                        <span>
+                                            Срок:
+                                            {{ document.deadline|date:"d.m.Y" }}
+                                        </span>
+                                    {% endif %}
+
+                                    {% if document.filled_by %}
+                                        <span>
+                                            Заполняет: {{ document.filled_by }}
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="document-card__actions">
+
+                                <a
+                                    href="{% url 'document_detail' practice.id stage.id document.id %}"
+                                    class="button"
+                                >
+                                    Подробнее
+                                </a>
+
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+
+            {% else %}
+                <div class="empty-state">
+                    <h3>Документов пока нет</h3>
+
+                    <p>
+                        Для этого этапа документы ещё не добавлены.
+                    </p>
+
+                </div>
+
+            {% endif %}
         </section>
-    {% endif %}
-
-
-    {% if stage.requirements %}
-        <section>
-            <h2>Требования</h2>
-            <p>
-                {{ stage.requirements|linebreaksbr }}
-            </p>
-        </section>
-    {% endif %}
-
-
-    {% if stage.deadline %}
-        <section>
-            <h2>Срок</h2>
-            <p>
-                {{ stage.deadline|date:"d.m.Y" }}
-            </p>
-        </section>
-    {% endif %}
-
-    <section>
-
-        <h2>
-            Документы
-        </h2>
-
-        <div class="document-list">
-            {% for document in documents %}
-
-                <a
-                    href="{% url 'document_detail' practice.id stage.id document.id %}"
-                    class="document-card"
-                >
-                    <h3>
-                        {{ document.name }}
-                    </h3>
-
-                </a>
-
-            {% empty %}
-                <p>
-                    Для этого этапа документы пока не добавлены.
-                </p>
-            {% endfor %}
-
-        </div>
-    </section>
-</div>
-
+    </div>
+</section>
 {% endblock %}

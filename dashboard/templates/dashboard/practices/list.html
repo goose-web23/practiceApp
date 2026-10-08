@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'home' %}">Главная</a>
+    <span>→</span>
+    <span>Админ-панель</span>
+    <span>→</span>
+    <span>Практики</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="dashboard-section">
+    <div class="dashboard-header">
+        <div>
+            <h1>Практики</h1>
+            <p class="text-muted">
+                Управление видами практики.
+            </p>
+        </div>
+
+        <a
+            href="{% url 'dashboard_practice_create' %}"
+            class="button"
+        >
+            Добавить практику
+        </a>
+    </div>
+
+    {% if practices %}
+        <div class="dashboard-list">
+            {% for practice in practices %}
+                <div class="dashboard-item">
+
+                    <div class="dashboard-item__content">
+                        <h2>{{ practice.name }}</h2>
+
+                        {% if practice.description %}
+                            <p>{{ practice.description }}</p>
+                        {% endif %}
+
+                        <span class="dashboard-status
+                            {% if practice.active %}
+                                dashboard-status--active
+                            {% else %}
+                                dashboard-status--inactive
+                            {% endif %}
+                        ">
+                            {% if practice.active %}
+                                Активна
+                            {% else %}
+                                Скрыта
+                            {% endif %}
+                        </span>
+                    </div>
+
+                    <div class="dashboard-item__actions">
+                        <a
+                            href="{% url 'dashboard_stage_list' practice.id %}"
+                            class="button button--secondary"
+                        >
+                            Этапы
+                        </a>
+
+                        <a
+                            href="{% url 'dashboard_practice_edit' practice.id %}"
+                            class="button button--secondary"
+                        >
+                            Редактировать
+                        </a>
+
+                        <a
+                            href="{% url 'dashboard_practice_delete' practice.id %}"
+                            class="button button--danger"
+                        >
+                            Удалить
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    {% else %}
+        <div class="empty-state">
+            <h2>Практик пока нет</h2>
+            <p>
+                Создайте первую практику, чтобы начать наполнять систему.
+            </p>
+
+            <a
+                href="{% url 'dashboard_practice_create' %}"
+                class="button"
+            >
+                Добавить практику
+            </a>
+        </div>
+    {% endif %}
+
+</section>
+{% endblock %}

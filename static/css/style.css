@@ -511,3 +511,425 @@ section:last-child {
         width: 100%;
     }
 }
+
+/* =========================
+   Auth
+   ========================= */
+
+.auth-card {
+    width: min(100%, 440px);
+
+    margin: 60px auto 0;
+    padding: 32px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+
+    box-shadow: var(--shadow);
+}
+
+.auth-card h1 {
+    font-size: 32px;
+}
+
+.form-field {
+    margin-bottom: 18px;
+}
+
+.form-field label {
+    display: block;
+    margin-bottom: 7px;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.form-field input {
+    width: 100%;
+    height: 44px;
+
+    padding: 0 12px;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    background: #fff;
+    color: var(--text);
+
+    outline: none;
+}
+
+.form-field input:focus {
+    border-color: var(--accent);
+}
+
+.form-error {
+    margin-bottom: 20px;
+    padding: 12px 14px;
+
+    border: 1px solid #e5caca;
+    border-radius: 8px;
+
+    background: #faf3f3;
+    color: var(--danger);
+
+    font-size: 14px;
+}
+
+/* =========================
+   Dashboard
+   ========================= */
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+
+    margin-top: 35px;
+}
+
+.dashboard-card {
+    padding: 25px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+
+    transition:
+        border-color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.dashboard-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+}
+
+.dashboard-card span {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.dashboard-card h2 {
+    margin: 20px 0 8px;
+}
+
+.dashboard-card p {
+    margin-bottom: 0;
+}
+
+.dashboard-footer {
+    margin-top: 30px;
+}
+
+@media (max-width: 800px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Карточки практик в админ-панели */
+
+.practice-admin-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    margin-top: 32px;
+}
+
+.practice-admin-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 28px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface);
+}
+
+.practice-admin-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.practice-admin-card__header h2 {
+    margin: 10px 0 0;
+    overflow-wrap: anywhere;
+}
+
+.practice-admin-card__label {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.practice-admin-card__description {
+    margin: 20px 0;
+    line-height: 1.6;
+}
+
+.practice-admin-card__meta {
+    padding-top: 16px;
+    margin-top: auto;
+    border-top: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.practice-admin-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.practice-admin-card__actions .button {
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .practice-admin-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .practice-admin-card {
+        padding: 22px;
+    }
+}
+
+@media (max-width: 480px) {
+    .practice-admin-card__header {
+        flex-direction: column;
+    }
+
+    .practice-admin-card__actions {
+        flex-direction: column;
+    }
+
+    .practice-admin-card__actions .button {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+/* Страница этапа: информация слева, документы справа */
+
+.stage-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    align-items: start;
+    gap: 40px;
+    margin: 32px 0 64px;
+}
+
+.stage-information,
+.stage-documents {
+    min-width: 0;
+}
+
+.stage-information {
+    padding-right: 28px;
+    border-right: 1px solid var(--border);
+}
+
+.stage-heading {
+    margin-bottom: 32px;
+}
+
+.stage-heading__label {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.stage-heading h1 {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.stage-heading__description {
+    margin-top: 16px;
+    line-height: 1.7;
+    color: var(--muted);
+}
+
+.stage-info-block {
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+}
+
+.stage-info-block h2 {
+    margin: 0 0 14px;
+    font-size: 18px;
+}
+
+.stage-info-block p {
+    margin: 0;
+    line-height: 1.7;
+}
+
+.stage-rich-text {
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+.stage-rich-text p:first-child {
+    margin-top: 0;
+}
+
+.stage-rich-text p:last-child {
+    margin-bottom: 0;
+}
+
+.stage-documents__heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.stage-documents__heading h2 {
+    margin: 0;
+    font-size: 26px;
+}
+
+.stage-documents__count {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 8px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.stage-documents__list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+.document-card {
+    min-width: 0;
+    padding: 24px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface);
+}
+
+.document-card h3 {
+    margin: 0 0 12px;
+    overflow-wrap: anywhere;
+}
+
+.document-card__body > p {
+    margin: 0 0 18px;
+    line-height: 1.7;
+    color: var(--muted);
+    overflow-wrap: anywhere;
+}
+
+.document-card__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.document-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+@media (max-width: 900px) {
+    .stage-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 32px;
+    }
+
+    .stage-information {
+        padding-right: 0;
+        border-right: 0;
+    }
+
+    .stage-documents {
+        padding-top: 28px;
+        border-top: 1px solid var(--border);
+    }
+}
+
+@media (max-width: 480px) {
+    .stage-layout {
+        gap: 24px;
+        margin-top: 20px;
+    }
+
+    .document-card {
+        padding: 18px;
+    }
+
+    .stage-documents__heading h2 {
+        font-size: 22px;
+    }
+}
+
+/* Пояснения к этапам и документам */
+
+.stage-explanations,
+.document-explanations {
+    margin-top: 32px;
+}
+
+.stage-explanations > h2,
+.document-explanations > h2 {
+    margin-bottom: 20px;
+}
+
+.explanation-card {
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+}
+
+.explanation-card h3 {
+    margin: 0 0 12px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.explanation-card__text {
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+.explanation-card__text p {
+    margin: 0 0 12px;
+}
+
+.explanation-card__text p:last-child {
+    margin-bottom: 0;
+}
+
+@media (max-width: 600px) {
+    .explanation-card {
+        padding: 16px;
+    }
+}

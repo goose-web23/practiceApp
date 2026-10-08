@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 from django.shortcuts import get_object_or_404, render
-
+from practices.models import Explanation
 from .models import Document
 
 
@@ -21,6 +21,7 @@ def document_detail(
 
     practice = document.stage.practice
     stage = document.stage
+    explanations = Explanation.objects.filter(document=document)
 
     return render(
         request,
@@ -29,5 +30,6 @@ def document_detail(
             "practice": practice,
             "stage": stage,
             "document": document,
+            "explanations": explanations,
         },
     )
