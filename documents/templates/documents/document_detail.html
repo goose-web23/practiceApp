@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ document.name }}
+{% endblock %}
+
+{% block breadcrumbs %}
+
+<nav class="breadcrumbs">
+    <a href="{% url 'home' %}">
+        Главная
+    </a>
+
+    <span>→</span>
+
+    <a href="{% url 'practice_detail' practice.id %}">
+        {{ practice.name }}
+    </a>
+
+    <span>→</span>
+
+    <a href="{% url 'stage_detail' practice.id stage.id %}">
+        {{ stage.name }}
+    </a>
+
+    <span>→</span>
+
+    <span>
+        {{ document.name }}
+    </span>
+
+</nav>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+
+    <h1>
+        {{ document.name }}
+    </h1>
+
+
+    {% if document.instruction %}
+        <section>
+            <h2>
+                Как заполнить
+            </h2>
+
+            <div>
+                {{ document.instruction|linebreaks }}
+            </div>
+        </section>
+    {% endif %}
+
+
+    {% if document.filled_by %}
+        <section>
+
+            <h2>
+                Кто заполняет
+            </h2>
+
+            <p>
+                {{ document.filled_by }}
+            </p>
+        </section>
+    {% endif %}
+
+
+    {% if document.signed_by %}
+        <section>
+
+            <h2>
+                Кто подписывает
+            </h2>
+
+            <p>
+                {{ document.signed_by }}
+            </p>
+        </section>
+    {% endif %}
+
+
+    {% if document.deadline %}
+        <section>
+            <h2>
+                Срок
+            </h2>
+
+            <p>
+                {{ document.deadline|date:"d.m.Y" }}
+            </p>
+        </section>
+    {% endif %}
+
+
+    <section>
+        <h2>
+            Файлы
+        </h2>
+
+        <div class="document-actions">
+
+            {% if document.template_file %}
+                <a
+                    href="{{ document.template_file.url }}"
+                    class="button"
+                    download
+                >
+                    Скачать шаблон
+                </a>
+            {% endif %}
+
+            {% if document.example_file %}
+                <a
+                    href="{{ document.example_file.url }}"
+                    class="button button--secondary"
+                    target="_blank"
+                >
+                    Открыть пример
+                </a>
+            {% endif %}
+        </div>
+    </section>
+
+
+    {% if document.explanations.exists %}
+        <section>
+            <h2>
+                Дополнительная информация
+            </h2>
+
+            {% for explanation in document.explanations.all %}
+                <div>
+                    <h3>
+                        {{ explanation.title }}
+                    </h3>
+
+                    <p>
+                        {{ explanation.text|linebreaksbr }}
+                    </p>
+
+                </div>
+            {% endfor %}
+        </section>
+    {% endif %}
+
+</div>
+
+{% endblock %}

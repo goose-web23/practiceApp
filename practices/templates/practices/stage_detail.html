@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ stage.name }} — {{ practice.name }}
+{% endblock %}
+
+{% block breadcrumbs %}
+
+<nav class="breadcrumbs">
+
+    <a href="{% url 'home' %}">
+        Главная
+    </a>
+
+    <span>→</span>
+
+    <a href="{% url 'practice_detail' practice.id %}">
+        {{ practice.name }}
+    </a>
+
+    <span>→</span>
+
+    <span>
+        {{ stage.name }}
+    </span>
+
+</nav>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+
+    <h1>
+        {{ stage.name }}
+    </h1>
+
+    {% if stage.instructions %}
+        <section>
+            <h2>Инструкция</h2>
+            <p>
+                {{ stage.instructions|linebreaksbr }}
+            </p>
+        </section>
+    {% endif %}
+
+
+    {% if stage.requirements %}
+        <section>
+            <h2>Требования</h2>
+            <p>
+                {{ stage.requirements|linebreaksbr }}
+            </p>
+        </section>
+    {% endif %}
+
+
+    {% if stage.deadline %}
+        <section>
+            <h2>Срок</h2>
+            <p>
+                {{ stage.deadline|date:"d.m.Y" }}
+            </p>
+        </section>
+    {% endif %}
+
+    <section>
+
+        <h2>
+            Документы
+        </h2>
+
+        <div class="document-list">
+            {% for document in documents %}
+
+                <a
+                    href="{% url 'document_detail' practice.id stage.id document.id %}"
+                    class="document-card"
+                >
+                    <h3>
+                        {{ document.name }}
+                    </h3>
+
+                </a>
+
+            {% empty %}
+                <p>
+                    Для этого этапа документы пока не добавлены.
+                </p>
+            {% endfor %}
+
+        </div>
+    </section>
+</div>
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ practice.name }}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <nav class="breadcrumbs">
+        <a href="{% url 'home' %}">
+            Главная
+        </a>
+
+        <span>→</span>
+        <span>
+            {{ practice.name }}
+        </span>
+    </nav>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>
+        {{ practice.name }}
+    </h1>
+    {% if practice.description %}
+        <p>
+            {{ practice.description }}
+        </p>
+    {% endif %}
+
+    <section>
+        <h2>
+            Этапы практики
+        </h2>
+
+        <div class="stage-list">
+            {% for stage in stages %}
+                <a
+                    href="{% url 'stage_detail' practice.id stage.id %}"
+                    class="stage-card"
+                >
+                    <span>
+                        Этап {{ forloop.counter }}
+                    </span>
+                    <h3>
+                        {{ stage.name }}
+                    </h3>
+
+                </a>
+
+            {% empty %}
+                <p>
+                    Этапы пока не добавлены.
+                </p>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+
+{% endblock %}

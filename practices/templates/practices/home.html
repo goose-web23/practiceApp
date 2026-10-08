@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Практика студентов
+{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="container">
+        <h1>
+            Информация о практике
+        </h1>
+        <p>
+            Выберите вид практики, чтобы получить
+            необходимые документы и инструкции.
+        </p>
+        <div class="practice-list">
+            {% for practice in practices %}
+                <a
+                    href="{% url 'practice_detail' practice.id %}"
+                    class="practice-card"
+                >
+                    <h2>
+                        {{ practice.name }}
+                    </h2>
+                    {% if practice.description %}
+                        <p>
+                            {{ practice.description }}
+                        </p>
+                    {% endif %}
+                </a>
+            {% empty %}
+                <p>
+                    Пока нет доступных видов практики.
+                </p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}
