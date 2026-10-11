@@ -23,7 +23,12 @@ class Stage(models.Model):
     name = models.CharField(max_length=150)
     instructions = models.TextField(blank=True)
     requirements = models.TextField(blank=True)
-    deadline = models.DateField(null=True, blank=True)
+    deadline = models.CharField(
+        max_length=200,
+        blank=True,
+        default="",
+        verbose_name="Срок выполнения",
+    )
     order = models.PositiveIntegerField(default=0)
 
     class Meta:

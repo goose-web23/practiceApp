@@ -10,7 +10,12 @@ class Document(models.Model):
     )
     name = models.CharField(max_length=200)
     instruction = models.TextField(blank=True)
-    deadline = models.DateField(null=True, blank=True)
+    deadline = models.CharField(
+        max_length=200,
+        blank=True,
+        default="",
+        verbose_name="Срок выполнения",
+    )
     filled_by = models.CharField(max_length=300, blank=True)
     signed_by = models.CharField(max_length=300, blank=True)
 

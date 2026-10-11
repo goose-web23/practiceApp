@@ -78,10 +78,10 @@ class StageForm(forms.ModelForm):
                     "rows": 6,
                 }
             ),
-            "deadline": forms.DateInput(
+            "deadline": forms.TextInput(
                 attrs={
                     "class": "form-input",
-                    "type": "date",
+                    "placeholder": "Например: до окончания практики",
                 }
             ),
             "order": forms.NumberInput(
@@ -137,10 +137,10 @@ class DocumentForm(forms.ModelForm):
                     ),
                 }
             ),
-            "deadline": forms.DateInput(
+            "deadline": forms.TextInput(
                 attrs={
                     "class": "form-input",
-                    "type": "date",
+                    "placeholder": "Например: до окончания практики",
                 }
             ),
             "filled_by": forms.TextInput(

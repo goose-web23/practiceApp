@@ -6,10 +6,10 @@
         </a>
 
         <nav class="header__nav">
-            <a href="{% url 'home' %}">Главная</a>
+            <a class="header__link" href="{% url 'dashboard_home' %}">Админ-панель</a>
 
             {% if user.is_authenticated %}
-                <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                <form method="post" action="{% url 'logout' %}">
                     {% csrf_token %}
                     <button type="submit" class="header__link">
                         Выйти

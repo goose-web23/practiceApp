@@ -91,7 +91,7 @@
             </h2>
 
             <p>
-                {{ document.deadline|date:"d.m.Y" }}
+                {{ document.deadline }}
             </p>
         </section>
     {% endif %}
@@ -141,27 +141,6 @@
         </div>
     </section>
 
-
-    {% if document.explanations.exists %}
-        <section>
-            <h2>
-                Дополнительная информация
-            </h2>
-
-            {% for explanation in document.explanations.all %}
-                <div>
-                    <h3>
-                        {{ explanation.title }}
-                    </h3>
-
-                    <p>
-                        {{ explanation.text|linebreaksbr }}
-                    </p>
-
-                </div>
-            {% endfor %}
-        </section>
-    {% endif %}
 
 </div>
 
