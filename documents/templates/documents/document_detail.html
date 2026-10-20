@@ -5,143 +5,163 @@
 {% endblock %}
 
 {% block breadcrumbs %}
-
 <nav class="breadcrumbs">
-    <a href="{% url 'home' %}">
-        Главная
-    </a>
-
+    <a href="{% url 'home' %}">Главная</a>
     <span>→</span>
 
     <a href="{% url 'practice_detail' practice.id %}">
         {{ practice.name }}
     </a>
-
     <span>→</span>
 
     <a href="{% url 'stage_detail' practice.id stage.id %}">
         {{ stage.name }}
     </a>
-
     <span>→</span>
 
-    <span>
-        {{ document.name }}
-    </span>
-
+    <span>{{ document.name }}</span>
 </nav>
-
 {% endblock %}
 
-
 {% block content %}
-
-<div class="container">
-
-    <h1>
-        {{ document.name }}
-    </h1>
+<section class="stage-page document-page">
+    <div class="stage-layout">
 
 
-    {% if document.instruction %}
-        <section>
-            <h2>
-                Как заполнить
-            </h2>
+        <aside class="stage-information">
 
-            <div>
-                {{ document.instruction|linebreaks }}
+            <div class="stage-heading">
+                <span class="stage-heading__label">
+                    Документ практики
+                </span>
+
+                <h1>{{ document.name }}</h1>
+            </div>
+
+            {% if document.instruction %}
+                <section class="stage-info-block">
+                    <h2>Как заполнить</h2>
+
+                    <div class="stage-rich-text">
+                        {{ document.instruction|linebreaks }}
+                    </div>
+                </section>
+            {% endif %}
+
+            {% if document.filled_by %}
+                <section class="stage-info-block">
+                    <h2>Кто заполняет</h2>
+
+                    <p>{{ document.filled_by }}</p>
+                </section>
+            {% endif %}
+
+            {% if document.signed_by %}
+                <section class="stage-info-block">
+                    <h2>Кто подписывает</h2>
+
+                    <p>{{ document.signed_by }}</p>
+                </section>
+            {% endif %}
+
+            {% if document.deadline %}
+                <section class="stage-info-block">
+                    <h2>Срок выполнения</h2>
+
+                    <p>{{ document.deadline }}</p>
+                </section>
+            {% endif %}
+
+            {% if explanations %}
+                <section class="stage-explanations">
+                    <h2>Дополнительные пояснения</h2>
+
+                    {% for explanation in explanations %}
+                        <article class="explanation-card">
+                            <h3>{{ explanation.title }}</h3>
+
+                            <div class="explanation-card__text">
+                                {{ explanation.text|linebreaks }}
+                            </div>
+                        </article>
+                    {% endfor %}
+                </section>
+            {% endif %}
+
+        </aside>
+
+        <section class="stage-documents">
+            <div class="stage-documents__heading">
+                <div>
+                    <span class="stage-heading__label">
+                        Материалы документа
+                    </span>
+
+                    <h2>Файлы</h2>
+                </div>
+            </div>
+
+            <div class="stage-documents__list">
+
+                {% if document.template_file %}
+                    <article class="document-card">
+                        <div class="document-card__body">
+                            <h3>Пустой шаблон</h3>
+
+                            <p>
+                                Скачайте файл, чтобы заполнить документ.
+                            </p>
+                        </div>
+
+                        <div class="document-card__actions">
+                            <a
+                                href="{{ document.template_file.url }}"
+                                class="button"
+                                download
+                            >
+                                Скачать шаблон
+                            </a>
+                        </div>
+                    </article>
+                {% endif %}
+
+                {% if document.example_file %}
+                    <article class="document-card">
+                        <div class="document-card__body">
+                            <h3>Заполненный пример</h3>
+
+                            <p>
+                                Используйте пример, чтобы ознакомиться
+                                с оформлением документа.
+                            </p>
+                        </div>
+
+                        <div class="document-card__actions">
+                            <a
+                                href="{{ document.example_file.url }}"
+                                class="button button--secondary"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Открыть пример
+                            </a>
+                        </div>
+                    </article>
+                {% endif %}
+
+                {% if not document.template_file and not document.example_file %}
+                    <div class="empty-state">
+                        <h3>Файлов пока нет</h3>
+
+                        <p>
+                            Файлы для этого документа ещё не добавлены.
+                        </p>
+                    </div>
+                {% endif %}
+
             </div>
         </section>
-    {% endif %}
 
-
-    {% if document.filled_by %}
-        <section>
-
-            <h2>
-                Кто заполняет
-            </h2>
-
-            <p>
-                {{ document.filled_by }}
-            </p>
-        </section>
-    {% endif %}
-
-
-    {% if document.signed_by %}
-        <section>
-
-            <h2>
-                Кто подписывает
-            </h2>
-
-            <p>
-                {{ document.signed_by }}
-            </p>
-        </section>
-    {% endif %}
-
-
-    {% if document.deadline %}
-        <section>
-            <h2>
-                Срок
-            </h2>
-
-            <p>
-                {{ document.deadline }}
-            </p>
-        </section>
-    {% endif %}
-
-    {% if explanations %}
-        <section class="document-explanations">
-            <h2>Дополнительные пояснения</h2>
-
-            {% for explanation in explanations %}
-                <article class="explanation-card">
-                    <h3>{{ explanation.title }}</h3>
-                    <div class="explanation-card__text">
-                        {{ explanation.text|linebreaks }}
-                    </div>
-                </article>
-            {% endfor %}
-        </section>
-    {% endif %}
-
-
-    <section>
-        <h2>
-            Файлы
-        </h2>
-
-        <div class="document-actions">
-
-            {% if document.template_file %}
-                <a
-                    href="{{ document.template_file.url }}"
-                    class="button"
-                    download
-                >
-                    Скачать шаблон
-                </a>
-            {% endif %}
-
-            {% if document.example_file %}
-                <a
-                    href="{{ document.example_file.url }}"
-                    class="button button--secondary"
-                    target="_blank"
-                >
-                    Открыть пример
-                </a>
-            {% endif %}
-        </div>
-    </section>
-
-
-</div>
-
+    </div>
+</section>
 {% endblock %}

@@ -27,12 +27,6 @@
 
                 <h1>{{ stage.name }}</h1>
 
-                {% if practice.description %}
-                    <p class="stage-heading__description">
-                        {{ practice.description }}
-                    </p>
-                {% endif %}
-
             </div>
 
             {% if stage.deadline %}
@@ -127,7 +121,7 @@
                                     {% if document.deadline %}
                                         <span>
                                             Срок:
-                                            {{ document.deadline|date:"d.m.Y" }}
+                                            {{ document.deadline }}
                                         </span>
                                     {% endif %}
 

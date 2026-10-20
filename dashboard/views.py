@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import get_object_or_404, redirect, render
+from django.http import Http404
 
 from practices.models import Practice, Stage
 from .forms import DocumentForm, PracticeForm, StageForm

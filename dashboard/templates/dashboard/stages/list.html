@@ -54,34 +54,22 @@
                         <a
                             href="{% url 'dashboard_explanation_list' 'stage' stage.id %}"
                             class="button"
+                            style="margin-right: 0.5vw"
                         >
                             Пояснения к этапу
                         </a>
 
-                        <div class="dashboard-meta">
-
-                            {% if stage.deadline %}
-                                <span>
-                                    Дедлайн:
-                                    {{ stage.deadline }}
-                                </span>
-                            {% endif %}
-
-                            <span>
-                                Порядок: {{ stage.order }}
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                    <div class="dashboard-item__actions">
-                        <a
+                         <a
                             href="{% url 'dashboard_document_list' practice.id stage.id %}"
                             class="button button--secondary"
                         >
                             Документы
                         </a>
+
+
+                    </div>
+
+                    <div class="dashboard-item__actions">
 
                         <a
                             href="{% url 'dashboard_stage_edit' practice.id stage.id %}"
